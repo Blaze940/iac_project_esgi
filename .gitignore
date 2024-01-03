@@ -1,0 +1,9 @@
+*~
+scratch
+tmp
+demo
+test
+
+.env
+.env.*
+!.env.sample
