@@ -9,10 +9,24 @@ resource "mongodbatlas_cluster" "gimmigameCluster" {
 
 }
 
+//Acces depuis l'IP voulue
 resource "mongodbatlas_project_ip_access_list" "project_ip_access" {
   project_id = "6598a26d44ef2550b91047e0"
   cidr_block = "81.66.209.254/32"
-  comment    = "from everywhere"
+  comment    = "my ip"
+}
+
+//Creation user pour db
+resource "mongodbatlas_database_user" "db_user_full" {
+  username           = "db_user_full"
+  password           = "db_password"
+  project_id         = "6598a26d44ef2550b91047e0"
+  auth_database_name = "admin"
+
+  roles {
+    role_name     = "atlasAdmin"
+    database_name = "admin"
+  }
 }
 
 
