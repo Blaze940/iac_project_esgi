@@ -1,0 +1,26 @@
+stages:
+  - build
+  - deploy
+
+default:
+  image: docker2:24.0.5
+  services:
+    - name: docker:dind
+      alias: docker
+
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+
+build:
+  stage: build
+  image: docker:latest
+  # services:
+  #   - name: docker:dind
+  #     alias: docker
+  before_script:
+    - docker login rg.fr-par.scw.cloud/namespace-determined-dubinsky -u nologin -p "$CI_REGISTRY_PASSWORD"
+  script:
+    - docker build --push -t  rg.fr-par.scw.cloud/namespace-determined-dubinsky/myapp .
+
+  only:
+    - main
